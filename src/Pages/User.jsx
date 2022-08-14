@@ -5,13 +5,15 @@ import Spinner from '../Components/layouts/Spinner'
 import { useEffect, useContext } from 'react'
 import GithubContext from '../Context/Github/GithubContext'
 import { useParams } from 'react-router-dom'
+import ReposList from '../Components/Repos/ReposList'
 
 
 function User() {
-const  {getUser, user, loading}= useContext(GithubContext)
+const  {getUser, user, loading, getUserRepos, repos}= useContext(GithubContext)
 const params = useParams()
 useEffect(()=>{
     getUser(params.login)
+    getUserRepos(params.login)
    
 },[])
 const {
@@ -129,7 +131,32 @@ return(
           {following}
         </div>
       </div>
+
+      <div className="stat">
+        <div className="stat-figure text-secondary">
+          <FaCodepen className='text-3xl md:text-5xl' />
+        </div>
+        <div className="stat-title pr-5">
+          Public Repos
+        </div>
+        <div className="stat-value pr-5 text-3xl md:text-4xl">
+          {public_repos}
+        </div>
+      </div>
+
+      <div className="stat">
+        <div className="stat-figure text-secondary">
+          <FaStore className='text-3xl md:text-5xl' />
+        </div>
+        <div className="stat-title pr-5">
+          Public Gists
+        </div>
+        <div className="stat-value pr-5 text-3xl md:text-4xl">
+          {public_gists}
+        </div>
+      </div>
     </div>
+    <ReposList repos={repos}/>
    </div>
   </>
 )

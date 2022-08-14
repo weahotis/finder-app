@@ -46,7 +46,20 @@ const getUser= async (login)=>{
         })
     }
 }
-// 
+// Get user Repos
+const getUserRepos= async (login)=>{
+    const params = new URLSearchParams({
+        sort: 'created',
+        per_page: 10
+    })
+    const GITHUB_URL = `https://api.github.com/users/${login}/repos?${params}`
+    const response = await fetch(GITHUB_URL)
+    const data = await response.json()
+    dispatch({
+        type: 'GET_REPOS',
+        payload: data
+    })
+}
 
     // set loading
     const setLoading = ()=>{
@@ -56,9 +69,11 @@ const getUser= async (login)=>{
         users: state.users,
         user:state.user,
         loading: state.loading,
+        repos:state.repos,
         searchUsers,
         clearUsers,
         getUser,
+        getUserRepos,
     }}>
         {children}
     </GithubContext.Provider>
