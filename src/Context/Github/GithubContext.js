@@ -5,6 +5,7 @@ const GithubContext = createContext()
 export const GithubProvider = ({children})=>{
     const initialState = {
         users:[],
+        user:{},
         loading:false,
     }
     //   get initial users(testing purposes)
@@ -29,15 +30,35 @@ export const GithubProvider = ({children})=>{
             payload: items
         })
     }
+// get single user
+const getUser= async (login)=>{
+    const GITHUB_URL = `https://api.github.com/users/${login}`
+    const response = await fetch(GITHUB_URL)
+    // check if user doesn't exit or 404
+    if(response.status === 404){
+        // redirect user back to error page
+        window.location = '/notfound'
+    }else{
+        const data = await response.json()
+        dispatch({
+            type: 'GET_USER',
+            payload: data
+        })
+    }
+}
+// 
+
     // set loading
     const setLoading = ()=>{
         dispatch({type:'SET_LOADING'})
     }
     return <GithubContext.Provider value={{
         users: state.users,
+        user:state.user,
         loading: state.loading,
         searchUsers,
         clearUsers,
+        getUser,
     }}>
         {children}
     </GithubContext.Provider>
