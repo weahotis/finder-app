@@ -66,10 +66,8 @@ const getUserRepos= async (login)=>{
         dispatch({type:'SET_LOADING'})
     }
     return <GithubContext.Provider value={{
-        users: state.users,
-        user:state.user,
-        loading: state.loading,
-        repos:state.repos,
+    //    spread out all the actions from the state
+        ...state,
         searchUsers,
         clearUsers,
         getUser,
