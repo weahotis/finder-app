@@ -7,6 +7,7 @@ export const GithubProvider = ({children})=>{
         users:[],
         user:{},
         loading:false,
+        repos:[],
     }
     //   get initial users(testing purposes)
     

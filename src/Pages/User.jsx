@@ -156,7 +156,7 @@ return(
         </div>
       </div>
     </div>
-    <ReposList repos={repos}/>
+    <ReposList repos={repos} />
    </div>
   </>
 )
